@@ -8,11 +8,24 @@
       width: 1000px;
       height: 50px;
       margin: 0 auto;
-      margin-top: 150px;
-      font-size: 25px;
+      margin-top: 250px;
+      font-size: 30px;
+      font-family: Georgia;
     }
     form {
       text-align: center;
+    }
+    #trivia {
+      text-align: center;
+      font-size: 25px;
+      font-family: Georgia;
+      width: 800px;
+      height: 50px;
+      position: absolute;
+      left: 50%;
+      margin-left: -400px;
+      top: 25%;
+
     }
     #box {
       width:800px;
@@ -50,16 +63,17 @@
       top: 85%;
     }
     #saved {
+      text-align: center;
       width:400px;
-      height:20px;
+      height:25px;
       font-family:helvetica;
-      font-size: 15px;
+      font-size: 20px;
       color: grey;
       overflow:auto;
       position: absolute;
       left: 50%;
       margin-left: -200px;
-      top: 40%;
+      top: 55%;
     }
   </style>
 
@@ -67,9 +81,18 @@
   <script type="text/javascript">
 
    var lst = [];
+   var trivia_qs = ["The chocolate candy M&Ms stands for Mars and Murrie",
+                    "You can hear a blue whale's heartbeat from more than 2 miles away",
+                    "About 700 grapes go into one bottle of wine",
+                    "Fredric Baur invented the Pringles can. When he passed away in 2008, his ashes were buried in one",
+                    "In 1986, Apple launched a clothing line",
+                    "A baby can cost new parents 750 hours of sleep in the first year",
+                    "Google was originally named Backrub",
+                    "When the computer mouse was invented, it was called the 'X-Y Position Indicator for a Display System'",
+                    "The sum of all the numbers on a roulette wheel is 666"];
    var options = ["Your entry has been erased", "Your entry has been saved", "Your entry has been saved to "];
    var folders = ["Google Drive", "Desktop", "Bookmarks"];
-   var a = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2];
+   var a = [0,0,0,1,1,1,2,2,2];
    var count = 0;
 
    function shuffle(array) {
@@ -92,21 +115,31 @@
       }
 
    function myFunction() {
-     var r = Math.floor(Math.random() * 3);
-     lst.push(document.getElementById("input").value);
-     document.getElementById('input').value = '';
+     var x = document.getElementById("input");
      var y = document.getElementById("saved");
+     var z = document.getElementById("trivia");
 
-     if (a[count] == 2) {
-       lst.push(options[a[count]]+folders[r]);
-       y.innerHTML = options[a[count]]+folders[r];
-
-     }  else {
-       lst.push(options[a[count]]);
-       y.innerHTML = options[a[count]];
+     if (x.value == '') {
+       z.innerHTML = trivia_qs[count];
+       y.innerHTML = '';
      }
 
-    count ++;
+     else {
+       var r = Math.floor(Math.random() * 3);
+       lst.push(x.value);
+       x.value = '';
+
+
+       if (a[count] == 2) {
+         lst.push(options[a[count]]+folders[r]);
+         y.innerHTML = options[a[count]]+folders[r];
+
+       }  else {
+         lst.push(options[a[count]]);
+         y.innerHTML = options[a[count]];
+       }
+       count ++;
+     }
    }
 
    function done() {
@@ -120,8 +153,10 @@
      shuffle(a);
      var x = document.getElementById("box");
      var y = document.getElementById("saved");
+     var z = document.getElementById("trivia");
      y.innerHTML = '';
      x.innerHTML = '';
+     z.innerHTML = trivia_qs[0];
    }
 
   </script>
@@ -134,6 +169,7 @@
     </div>
   </form>
 
+  <div id="trivia"> </div>
   <div id="saved"> </div>
   <div id="box"> </div>
   <button id="done" type="button" onclick="done();">Done</button>
